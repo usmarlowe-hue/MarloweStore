@@ -143,22 +143,14 @@
       style="--LOGO-WIDTH: {{ logo_width }}px"
     >
       {% if section.settings.logo != blank %}
-        {%- assign alt = section.settings.logo.alt | default: shop.name | strip_html | escape %}
-        {%- assign logo_width_2x = logo_width | times: 2 %}
-        {%- assign logo_width_3x = logo_width | times: 3 %}
-
-        {% capture srcset %}
-          {{ section.settings.logo | image_url: width: logo_width_2x }} 2x,
-          {{ section.settings.logo | image_url: width: logo_width_3x }} 3x,
-          {{ section.settings.logo | image_url: width: logo_width }}
-        {% endcapture %}
-
-        {{ section.settings.logo | image_url: width: logo_width | image_tag:
-          class: "logo__img logo__img--color",
-          srcset: srcset,
-          alt: alt,
-          preload: true
-        }}
+        {%- assign alt = shop.name | strip_html | escape -%}
+        <img
+          src="{{ 'alderton-logo.png' | asset_url }}"
+          alt="{{ alt }}"
+          class="logo__img logo__img--color"
+          width="{{ logo_width }}"
+          loading="eager"
+        >
       {% else %}
         {% liquid
           assign text_logo_length = ''
@@ -185,21 +177,15 @@
         </div>
       {% endif %}
       {% if has_transparent_logo %}
-        {%- assign alt = section.settings.transparent_logo.alt | default: shop.name | strip_html | escape %}
-        {%- assign transparent_logo_width = logo_width | at_most: section.settings.logo_max_limit %}
-        {%- assign transparent_logo_width_2x = transparent_logo_width | times: 2 %}
-
-        {% capture srcset %}
-          {{ section.settings.transparent_logo | image_url: width: transparent_logo_width_2x }} 2x,
-          {{ section.settings.transparent_logo | image_url: width: transparent_logo_width }}
-        {% endcapture %}
-
-        {{ section.settings.transparent_logo | image_url: width: transparent_logo_width | image_tag:
-          class: "logo__img logo__img--transparent",
-          srcset: srcset,
-          alt: alt,
-          preload: true
-        }}
+        {%- assign alt = shop.name | strip_html | escape -%}
+        {%- assign transparent_logo_width = logo_width | at_most: section.settings.logo_max_limit -%}
+        <img
+          src="{{ 'alderton-logo.png' | asset_url }}"
+          alt="{{ alt }}"
+          class="logo__img logo__img--transparent"
+          width="{{ transparent_logo_width }}"
+          loading="eager"
+        >
       {% endif %}
     </a>
   </div>
